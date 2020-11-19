@@ -26,7 +26,8 @@ class Model {
     faces = List<List<int>>();
     colors = List<Color>();
     materials = {
-      "default": _toRGBA(0.5, 0.5, 0.5),
+      "default": _toRGBA(1.0, 1.0, 1.0),
+      "default2": _toRGBA(1.0, 0.0, 1.0),
     };
   }
 
@@ -60,21 +61,23 @@ class Model {
           int.parse(values[2].split("/")[0]),
           int.parse(values[3].split("/")[0]),
         ]));
-        colors.add(Color(0xffffffff));
-
-        if (values.length == 5) {
-          // print(values.join('|'));
-          faces.add(List.from([
-            int.parse(values[1].split("/")[0]),
-            int.parse(values[3].split("/")[0]),
-            int.parse(values[4].split("/")[0]),
-          ]));
-          colors.add(Color(0xffffffff));
-        }
 
         colors.add(materials.containsKey(material)
             ? materials[material]
             : materials['default']);
+
+        if (values.length == 5) {
+          // print(values.join('|'));
+          faces.add(List.from([
+            int.parse(values[3].split("/")[0]),
+            int.parse(values[4].split("/")[0]),
+            int.parse(values[1].split("/")[0]),
+          ]));
+
+          colors.add(materials.containsKey(material)
+              ? materials[material]
+              : materials['default2']);
+        }
       }
     });
     print("completed.");
